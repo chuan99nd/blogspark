@@ -1,0 +1,9 @@
+title: "Multi-version Concurrent Control"
+createdAt: "2026-01-26T00:00:00Z"
+modifiedAt: "2026-01-26T00:00:00Z"
+summary: |
+  A practical deep dive into MVCC: concurrency protocols, version storage, garbage collection, and index design.
+tags: 
+  - "Backend"
+  - "Paper Notes"
+catalog: "engineering"

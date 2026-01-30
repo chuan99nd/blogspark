@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             <Terminal size={18} className="text-white" />
           </div>
           <span className="font-extrabold text-lg tracking-tight text-zinc-900 hidden sm:block">
-            Hieu<span className="text-zinc-400">.</span>blog
+            Chuan<span className="text-zinc-400">.</span>blog
           </span>
         </Link>
 

@@ -1,40 +1,26 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Link from "next/link";
 
 import BlogCard from '@/components/BlogCard';
 import Sidebar from '@/components/Sidebar';
-import { mockPosts, siteConfig } from '@/app/mockData';
 import { Github, Linkedin, Globe } from 'lucide-react';
-import { SiteConfig } from '@/types/types';
+import { getAllPosts, getSiteConfig } from '@/libs/cache';
 
-const Home: React.FC<{ tagName?: string }> = ({ tagName }) => {
+const Home: React.FC<{ tagName?: string }> = async ({ tagName }) => {
 
-  // const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null);
+  const siteConfig = getSiteConfig();
 
-  // useEffect(() => {
-  //   const fetchSiteConfig = async () => {
-  //     try {
-  //       const content = await fetch("/about.me.json").then(res => res.json());
-  //       setSiteConfig(content as SiteConfig);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
+  const filteredPosts = getAllPosts().filter(post => {
+    const matchesTag = !tagName || post.tags.includes(tagName);
 
-
-  const filteredPosts = useMemo(() => {
-    return mockPosts.filter(post => {
-      const matchesTag = !tagName || post.metadata.tags.includes(tagName);
-
-      return matchesTag;
-    }).sort((a, b) => new Date(b.metadata.createdAt).getTime() - new Date(a.metadata.createdAt).getTime());
-  }, [tagName]);
+    return matchesTag;
+  }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   return (
     <div className="max-w-7xl mx-auto">
       {/* Header Section */}
       <section className="text-center mb-16 pt-8 max-w-3xl mx-auto">
-        <h1 className="text-5xl font-black text-zinc-900 mb-6 tracking-tight">Hieu’s blog</h1>
+        <h1 className="text-5xl font-black text-zinc-900 mb-6 tracking-tight">{siteConfig.author}</h1>
         <p className="text-zinc-600 leading-relaxed text-[15px] mb-8 font-medium">
           {siteConfig?.bio}
         </p>
@@ -75,7 +61,7 @@ const Home: React.FC<{ tagName?: string }> = ({ tagName }) => {
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredPosts.map(post => (
-                <BlogCard key={post.metadata.id} metadata={post.metadata} />
+                <BlogCard key={post.id} metadata={post} />
               ))}
             </div>
           ) : (

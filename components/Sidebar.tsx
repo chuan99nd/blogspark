@@ -1,21 +1,12 @@
 
 import React from 'react';
 
-import { mockPosts } from '../app/mockData';
 import { getTagStyles } from './BlogCard';
 import Link from 'next/link';
+import { getSortedTags } from '@/libs/cache';
 
 const Sidebar: React.FC = () => {
-  // Aggregate tags with counts
-  const tagCounts = mockPosts.reduce((acc, post) => {
-    post.metadata.tags.forEach(tag => {
-      acc[tag] = (acc[tag] || 0) + 1;
-    });
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Sort tags by count descending
-  const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
+  const sortedTags = getSortedTags();
 
   return (
     <aside className="bg-white border border-zinc-200 rounded-[2rem] p-8 h-fit sticky top-24">

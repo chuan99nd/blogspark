@@ -1,0 +1,14 @@
+- page config.yaml
+    - main.md
+
+file config.yaml follow theo
+
+export interface PostMetadata {
+    id: string;
+    title: string;
+    createdAt: string;
+    modifiedAt: string;
+    summary: string;
+    tags: string[];
+    catalog: string;
+}

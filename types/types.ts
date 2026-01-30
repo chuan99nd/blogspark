@@ -16,8 +16,11 @@ export interface Post {
 
 export interface SiteConfig {
   author: string;
+  role: string;
+  avatarUrl: string;
   github: string;
   bio: string;
+  footerBio: string;
   socials: {
     twitter?: string;
     linkedin?: string;

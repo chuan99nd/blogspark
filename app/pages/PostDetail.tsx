@@ -1,24 +1,27 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import Link from 'next/link'
 import { ArrowLeft, Share2 } from 'lucide-react';
-import { mockPosts } from '../mockData';
 import BlogCard from '../../components/BlogCard';
 import BlogScrollEffect from '@/components_client/BlogScrollEffect';
+import { getPostContent, getAllPosts, getPostInfo, getSiteConfig } from '@/libs/cache';
 
 const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
 
-  const post = useMemo(() => mockPosts.find(p => p.metadata.id === id), [id]);
+  const postContent = getPostContent(id);
+  const postMetadata = getPostInfo(id);
 
-  const relatedPosts = useMemo(() => {
-    if (!post) return [];
-    return mockPosts
-      .filter(p => p.metadata.id !== post.metadata.id && p.metadata.tags.some(t => post.metadata.tags.includes(t)))
-      .slice(0, 2);
-  }, [post]);
+  const allPostsMetadata = getAllPosts();
+  const siteConfig = getSiteConfig();
 
-  if (!post) {
+  const relatedPosts = postMetadata ?
+    allPostsMetadata.
+      filter(p => p.id !== postMetadata.id && p.tags.some(t => postMetadata.tags.includes(t)))
+      .slice(0, 2)
+    : [];
+
+  if (!postMetadata) {
     return (
       <div className="text-center py-20">
         <h1 className="text-2xl font-bold text-zinc-900 mb-4">Post Not Found</h1>
@@ -27,7 +30,7 @@ const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
     );
   }
 
-  const formattedDate = new Date(post.metadata.createdAt).toLocaleDateString('en-US', {
+  const formattedDate = new Date(postMetadata.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -44,23 +47,23 @@ const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
       <article>
         <header className="mb-12">
           <div className="flex flex-wrap items-center gap-4 mb-6">
-            <span className="text-xs font-black text-zinc-400 uppercase tracking-widest">{post.metadata.catalog}</span>
+            <span className="text-xs font-black text-zinc-400 uppercase tracking-widest">{postMetadata.catalog}</span>
             <span className="w-1 h-1 bg-zinc-200 rounded-full"></span>
             <span className="text-xs font-bold text-zinc-400">{formattedDate}</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black text-zinc-900 mb-10 leading-[1.1] tracking-tight">
-            {post.metadata.title}
+            {postMetadata.title}
           </h1>
 
           <div className="flex items-center justify-between py-8 border-y border-zinc-100">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-center font-bold text-zinc-400">
-                HN
+                <img src={siteConfig.avatarUrl} alt="Avatar" className="w-12 h-12 rounded-2xl" />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-zinc-900">Trung Hieu Nguyen</p>
-                <p className="text-xs text-zinc-400">Software Engineer</p>
+                <p className="text-sm font-extrabold text-zinc-900">{siteConfig.author}</p>
+                <p className="text-xs text-zinc-400">{siteConfig.role}</p>
               </div>
             </div>
             <button className="p-3 rounded-2xl bg-zinc-50 border border-zinc-100 text-zinc-400 hover:text-zinc-900 hover:border-zinc-200 transition-all">
@@ -70,7 +73,7 @@ const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
         </header>
 
         <div className="prose prose-zinc max-w-none prose-headings:text-zinc-900 prose-headings:font-black prose-p:text-zinc-600 prose-p:leading-relaxed prose-p:text-lg prose-a:text-blue-600 prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-2xl">
-          <div dangerouslySetInnerHTML={{ __html: formatMarkdown(post.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: formatMarkdown(postContent) }} />
         </div>
 
         <footer className="mt-20 pt-16 border-t border-zinc-100">
@@ -78,7 +81,7 @@ const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
           {relatedPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {relatedPosts.map(p => (
-                <BlogCard key={p.metadata.id} metadata={p.metadata} />
+                <BlogCard key={p.id} metadata={p} />
               ))}
             </div>
           ) : (
@@ -90,7 +93,8 @@ const PostDetail: React.FC<{ params: { id: string } }> = ({ params }) => {
   );
 };
 
-function formatMarkdown(content: string) {
+function formatMarkdown(content?: string) {
+  if (!content) return "";
   return content
     .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-black mt-12 mb-6 text-zinc-900">$1</h1>')
     .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-10 mb-5 text-zinc-800">$2</h2>')
