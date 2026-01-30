@@ -10,12 +10,19 @@
   },
   "dependencies": {
     "@yaml-js/typescript": "^0.1.0",
+    "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-router-dom": "^7.13.0"
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-pretty-code": "^0.14.1",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1",
+    "shiki": "^3.21.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
