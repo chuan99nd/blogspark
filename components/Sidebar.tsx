@@ -5,8 +5,8 @@ import { getTagStyles } from './BlogCard';
 import Link from 'next/link';
 import { getSortedTags } from '@/libs/cache';
 
-const Sidebar: React.FC = () => {
-  const sortedTags = getSortedTags();
+const Sidebar: React.FC = async () => {
+  const sortedTags = await getSortedTags();
 
   return (
     <aside className="bg-white border border-zinc-200 rounded-[2rem] p-8 h-fit sticky top-24">

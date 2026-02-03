@@ -12,3 +12,7 @@ export interface PostMetadata {
     tags: string[];
     catalog: string;
 }
+
+Todo:
+- Add cover picture in post and blogCard, align blog content to center
+- Add github workflow, validate and dd createdAt, modifiedAt 

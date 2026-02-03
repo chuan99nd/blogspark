@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Home from '@/app/pages/Home';
+import { getTagsList } from '@/libs/cache';
 
 export default async function PageFilter({
     params,

@@ -3,14 +3,16 @@ import Link from "next/link";
 
 import BlogCard from '@/components/BlogCard';
 import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
 import { Github, Linkedin, Globe } from 'lucide-react';
 import { getAllPosts, getSiteConfig } from '@/libs/cache';
 
+
 const Home: React.FC<{ tagName?: string }> = async ({ tagName }) => {
 
-  const siteConfig = getSiteConfig();
+  const siteConfig = await getSiteConfig();
 
-  const filteredPosts = getAllPosts().filter(post => {
+  const filteredPosts = (await getAllPosts()).filter(post => {
     const matchesTag = !tagName || post.tags.includes(tagName);
 
     return matchesTag;
@@ -18,6 +20,7 @@ const Home: React.FC<{ tagName?: string }> = async ({ tagName }) => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      <Navbar />
       {/* Header Section */}
       <section className="text-center mb-16 pt-8 max-w-3xl mx-auto">
         <h1 className="text-5xl font-black text-zinc-900 mb-6 tracking-tight">{siteConfig.author}</h1>

@@ -1,5 +1,13 @@
 import Footer from '@/components/Footer';
 import PostDetail from '@/app/pages/PostDetail';
+import { getPostsList } from '@/libs/cache';
+
+export const dynamic = "force-static"
+
+export async function generateStaticParams() {
+    const posts = await getPostsList();
+    return posts.map(post => ({ id: post }));
+}
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

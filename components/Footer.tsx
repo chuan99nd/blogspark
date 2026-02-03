@@ -2,8 +2,8 @@
 import React from 'react';
 import { getSiteConfig } from '@/libs/cache';
 
-const Footer: React.FC = () => {
-  const siteConfig = getSiteConfig();
+const Footer: React.FC = async () => {
+  const siteConfig = await getSiteConfig();
   return (
     <footer className="border-t border-zinc-100 py-16 bg-white mt-20">
       <div className="container mx-auto px-4 max-w-6xl">

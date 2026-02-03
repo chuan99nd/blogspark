@@ -2,7 +2,8 @@ import React from 'react';
 
 import Link from 'next/link'
 import { ArrowLeft, Share2 } from 'lucide-react';
-import BlogCard from '../../components/BlogCard';
+import BlogCard from '@/components/BlogCard';
+import Navbar from '@/components/Navbar';
 import BlogScrollEffect from '@/components_client/BlogScrollEffect';
 import { remark } from 'remark';
 import remarkGfm from "remark-gfm";
@@ -16,7 +17,7 @@ import { getPostContent, getAllPosts, getPostInfo, getSiteConfig } from '@/libs/
 const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
   const { id } = params;
 
-  const postContent = getPostContent(id) ?? "";
+  const postContent = await getPostContent(id) ?? "";
   const matterResult = matter(postContent);
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
@@ -28,12 +29,10 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
-  console.log(contentHtml);
+  const postMetadata = await getPostInfo(id);
 
-  const postMetadata = getPostInfo(id);
-
-  const allPostsMetadata = getAllPosts();
-  const siteConfig = getSiteConfig();
+  const allPostsMetadata = await getAllPosts();
+  const siteConfig = await getSiteConfig();
 
   const relatedPosts = postMetadata ?
     allPostsMetadata.
@@ -58,6 +57,7 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <Navbar />
 
       <BlogScrollEffect id={id} />
       <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-zinc-900 mb-12 transition-colors group">

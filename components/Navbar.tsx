@@ -1,27 +1,27 @@
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import { Search, Github, Terminal } from 'lucide-react';
 
 interface NavbarProps {
   onSearch: (query: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
-  const navigate = useNavigate();
+const Navbar: React.FC = () => {
+  // const navigate = useNavigate();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
-    onSearch(query);
-    if (window.location.hash !== '#/') {
-      navigate('/');
-    }
+    // onSearch(query);
+    // if (window.location.hash !== '#/') {
+    //   navigate('/');
+    // }
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
+    <nav className="top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
       <div className="container mx-auto px-4 max-w-6xl h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group">
           <div className="p-1.5 bg-zinc-900 rounded-lg group-hover:bg-zinc-800 transition-colors">
             <Terminal size={18} className="text-white" />
           </div>
@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             <input
               type="text"
               placeholder="Search concepts or tags..."
-              onChange={handleSearchChange}
+              // onChange={handleSearchChange}
               className="w-full bg-zinc-50 border border-zinc-200 rounded-xl py-1.5 pl-9 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition-all text-sm placeholder:text-zinc-400"
             />
           </div>
