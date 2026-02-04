@@ -2,6 +2,13 @@ import Footer from '@/components/Footer';
 import Home from '@/app/pages/Home';
 import { getTagsList } from '@/libs/cache';
 
+export const dynamic = "force-static"
+
+export async function generateStaticParams() {
+    const tags = await getTagsList();
+    return tags.map(tag => ({ tagName: encodeURIComponent(tag) }));
+}
+
 export default async function PageFilter({
     params,
 }: {

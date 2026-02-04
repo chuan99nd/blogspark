@@ -1,21 +1,22 @@
 
+"use client";
 import React from 'react';
 import Link from 'next/link';
 import { Search, Github, Terminal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-interface NavbarProps {
-  onSearch: (query: string) => void;
-}
 
 const Navbar: React.FC = () => {
-  // const navigate = useNavigate();
+  const router = useRouter();
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    // onSearch(query);
-    // if (window.location.hash !== '#/') {
-    //   navigate('/');
-    // }
+  const handleSearchChange = (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget)
+    const query = formData.get("query")
+    if (window.location.hash !== '#/') {
+      router.push('/');
+    }
+    router.push(`/search?query=${query}`);
   };
 
   return (
@@ -30,17 +31,18 @@ const Navbar: React.FC = () => {
           </span>
         </Link>
 
-        <div className="flex items-center gap-4 flex-1 max-w-sm ml-8">
+        <form onSubmit={handleSearchChange} className="flex items-center gap-4 flex-1 max-w-sm ml-8">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
             <input
               type="text"
               placeholder="Search concepts or tags..."
-              // onChange={handleSearchChange}
               className="w-full bg-zinc-50 border border-zinc-200 rounded-xl py-1.5 pl-9 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition-all text-sm placeholder:text-zinc-400"
+              name='query'
             />
           </div>
-        </div>
+        </form>
+
 
         <div className="flex items-center gap-4 ml-4">
           <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-zinc-900 transition-colors">
