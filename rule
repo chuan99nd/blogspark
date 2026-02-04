@@ -15,4 +15,6 @@ export interface PostMetadata {
 
 Todo:
 - Add cover picture in post and blogCard, align blog content to center
-- Add github workflow, validate and dd createdAt, modifiedAt 
+    - Add github workflow, validate and dd createdAt, modifiedAt
+        - Add SEO, meta tags
+            - DNS, SSL
