@@ -32,10 +32,13 @@ export default function SearchPage() {
     }, []);
 
     useEffect(() => {
+        if (!query) {
+            setSearchResults(allPosts);
+            return;
+        }
         const filteredPosts = allPosts.posts.filter(post => {
             return post.title.toLowerCase().includes(query.toLowerCase());
         });
-        console.log(filteredPosts);
         setSearchResults({ posts: filteredPosts });
     }, [query, allPosts]);
 
