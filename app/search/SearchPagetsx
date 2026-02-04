@@ -1,5 +1,6 @@
 "use client"
-import { PostMetadata } from '@/types/types';
+
+import { PostMetadata } from '../../types/types';
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
