@@ -2,19 +2,32 @@ import React from 'react';
 import Link from 'next/link';
 import { PostMetadata } from '../types/types';
 
+const TAG_STYLES = [
+  'bg-red-50 text-red-700 border-red-100',
+  'bg-orange-50 text-orange-700 border-orange-100',
+  'bg-purple-50 text-purple-700 border-purple-100',
+  'bg-indigo-50 text-indigo-700 border-indigo-100',
+  'bg-cyan-50 text-cyan-700 border-cyan-100',
+  'bg-yellow-50 text-yellow-700 border-yellow-100',
+  'bg-pink-50 text-pink-700 border-pink-100',
+  'bg-blue-50 text-blue-700 border-blue-100',
+  'bg-green-50 text-green-700 border-green-100',
+  'bg-zinc-50 text-zinc-700 border-zinc-200',
+];
+
+const hashString = (str: string) => {
+  let hash = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return Math.abs(hash);
+};
+
 export const getTagStyles = (tag: string) => {
-  const lowTag = tag.toLowerCase();
-  if (lowTag.includes('backend')) return 'bg-red-50 text-red-700 border-red-100';
-  if (lowTag.includes('web development')) return 'bg-orange-50 text-orange-700 border-orange-100';
-  if (lowTag.includes('front-end')) return 'bg-purple-50 text-purple-700 border-purple-100';
-  if (lowTag.includes('paper notes')) return 'bg-indigo-50 text-indigo-700 border-indigo-100';
-  if (lowTag.includes('distributed system')) return 'bg-cyan-50 text-cyan-700 border-cyan-100';
-  if (lowTag.includes('javascript')) return 'bg-yellow-50 text-yellow-700 border-yellow-100';
-  if (lowTag.includes('interview')) return 'bg-zinc-50 text-zinc-700 border-zinc-200';
-  if (lowTag.includes('c++')) return 'bg-zinc-100 text-zinc-800 border-zinc-200';
-  if (lowTag.includes('competitive programming')) return 'bg-pink-50 text-pink-700 border-pink-100';
-  if (lowTag.includes('css')) return 'bg-blue-50 text-blue-700 border-blue-100';
-  return 'bg-zinc-50 text-zinc-600 border-zinc-200';
+  const index = hashString(tag.toLowerCase()) % TAG_STYLES.length;
+  return TAG_STYLES[index];
 };
 
 interface BlogCardProps {
