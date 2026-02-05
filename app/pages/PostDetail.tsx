@@ -73,7 +73,7 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
             <span className="text-xs font-bold text-zinc-400">{formattedDate}</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 mb-10 leading-[1.1] tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 mb-10 leading-[1.1] tracking-tight" style={{ fontWeight: 600, color: '#1c1917' }}>
             {postMetadata.title}
           </h1>
 

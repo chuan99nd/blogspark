@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
           <div className="p-1.5 bg-zinc-900 rounded-lg group-hover:bg-zinc-800 transition-colors">
             <Terminal size={18} className="text-white" />
           </div>
-          <span className="font-extrabold text-lg tracking-tight text-zinc-900 hidden sm:block">
+          <span className="font-extrabold text-lg tracking-tight text-zinc-700 hidden sm:block" style={{ color: '#71717a', fontWeight: 100 }}>
             Chuan<span className="text-zinc-400">.</span>blog
           </span>
         </Link>
