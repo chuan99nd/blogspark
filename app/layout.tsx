@@ -1,21 +1,10 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Recursive } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const recursive = Recursive({
   subsets: ["latin"],
+  variable: "--font-recursive",
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "BlogSpark",
-  description: "How tech works under the hood",
-};
 
 export default function RootLayout({
   children,
@@ -25,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${recursive.variable} antialiased root`}
       >
         {children}
       </body>

@@ -22,8 +22,8 @@ export const loadPosts = cache(async (): Promise<PostStore> => {
         if (!folder.isDirectory()) continue
 
         const postId = folder.name
-        const configPath = path.join(POSTS_DIR, postId, "config.yaml")
-        const contentPath = path.join(POSTS_DIR, postId, "main.md")
+        const configPath = path.join(POSTS_DIR, postId, "_config.yaml")
+        const contentPath = path.join(POSTS_DIR, postId, "_main.md")
 
         try {
             const yamlText = await fs.readFile(configPath, "utf-8")
