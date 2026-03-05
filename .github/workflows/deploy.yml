@@ -35,14 +35,14 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd /code/duoclieuluongson
-            docker pull ghcr.io/chuan99nd/blogspark:latest
-            docker compose restart blogspark
+      # - name: Deploy via SSH
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     password: ${{ secrets.SSH_PASSWORD }}
+      #     script: |
+      #       cd /code/duoclieuluongson
+      #       docker pull ghcr.io/chuan99nd/blogspark:latest
+      #       docker compose restart blogspark
