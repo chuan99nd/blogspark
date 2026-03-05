@@ -1,7 +1,7 @@
 # Stage 1 - deps
 FROM node:20-alpine AS deps
 WORKDIR /app
-COPY package.json yarn.json ./
+COPY package.json yarn.lock ./
 RUN yarn install
 
 FROM node:20-alpine AS builder
