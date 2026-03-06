@@ -52,7 +52,7 @@ jobs:
           EOF
           chmod 600 ~/.ssh/id_rsa
 
-          echo ${{ SSH_KNOWNHOSTS }} >> ~/.ssh/known_hosts
+          echo ${{ secrets.SSH_KNOWNHOSTS }} >> ~/.ssh/known_hosts
 
           cat <<EOF >> ~/.ssh/config
           Host deploy
