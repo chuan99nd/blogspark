@@ -63,4 +63,4 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh deploy "docker container restart kakao-blogspark-1"
+          ssh deploy "docker pull ghcr.io/chuan99nd/blogspark:latest && docker container restart kakao-blogspark-1"
