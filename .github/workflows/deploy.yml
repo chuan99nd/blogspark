@@ -43,6 +43,7 @@ jobs:
 
       - name: Setup SSH
         run: |
+          set -xe
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
