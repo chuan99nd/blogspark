@@ -3,7 +3,7 @@ import { Recursive } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 
 const recursive = Recursive({
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   variable: "--font-recursive",
   display: "swap",
 });
@@ -11,7 +11,7 @@ const recursive = Recursive({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blogspark.dev";
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#fafaf9",
   width: "device-width",
   initialScale: 1,
 };
@@ -72,10 +72,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${recursive.variable} antialiased root`}
-      >
+    <html lang="en" className={recursive.variable}>
+      <body className="noise antialiased root">
         {children}
       </body>
     </html>

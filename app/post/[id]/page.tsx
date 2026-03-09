@@ -78,14 +78,14 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         : null;
 
     return (
-        <div className="min-h-screen flex flex-col bg-[#fcfcfc] text-[#334155]">
+        <div className="min-h-screen flex flex-col">
             {jsonLd && (
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             )}
-            <main className="flex-grow container mx-auto px-4 py-8 md:py-12 max-w-3xl">
+            <main className="flex-grow container mx-auto px-6 py-8 md:py-12 max-w-3xl">
                 <PostDetail params={{ id }} />
             </main>
             <Footer />

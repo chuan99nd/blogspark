@@ -2,8 +2,9 @@ import React from 'react';
 
 import Link from 'next/link'
 import Image from 'next/image';
-import { ArrowLeft, Share2 } from 'lucide-react';
+import { ArrowLeft, Share2, Clock } from 'lucide-react';
 import BlogCard from '@/components/BlogCard';
+import { getTagColor } from '@/components/BlogCard';
 import Navbar from '@/components_client/Navbar';
 import BlogScrollEffect from '@/components_client/BlogScrollEffect';
 import { remark } from 'remark';
@@ -43,9 +44,11 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
 
   if (!postMetadata) {
     return (
-      <div className="text-center py-20">
-        <h1 className="text-2xl font-bold text-zinc-900 mb-4">Post Not Found</h1>
-        <Link href="/" className="text-blue-500 hover:underline font-bold">Back to Home</Link>
+      <div className="text-center py-32">
+        <h1 className="text-2xl font-bold text-[#1c1917] mb-4">Post Not Found</h1>
+        <Link href="/" className="text-amber-600 hover:text-amber-500 font-mono text-sm border-b border-dashed border-amber-600/50 pb-0.5">
+          ← back to feed
+        </Link>
       </div>
     );
   }
@@ -56,65 +59,97 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
     day: 'numeric',
   });
 
+  // Rough reading time estimate
+  const wordCount = matterResult.content.split(/\s+/).length;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
   return (
     <div className="max-w-4xl mx-auto">
       <Navbar />
-
       <BlogScrollEffect id={id} />
-      <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-zinc-900 mb-12 transition-colors group">
-        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-        Back to Feed
+
+      {/* Back link */}
+      <Link href="/" className="inline-flex items-center gap-2 text-[13px] font-mono text-[#a8a29e] hover:text-amber-600 mt-8 mb-16 transition-colors duration-300 group animate-fade-in">
+        <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform duration-300" />
+        cd ..
       </Link>
 
       <article>
-        <header className="mb-12">
-          <div className="flex flex-wrap items-center gap-4 mb-6">
-            <span className="text-xs font-black text-zinc-400 uppercase tracking-widest">{postMetadata.catalog}</span>
-            <span className="w-1 h-1 bg-zinc-200 rounded-full"></span>
-            <span className="text-xs font-bold text-zinc-400">{formattedDate}</span>
+        {/* ── Article Header ───────────────────── */}
+        <header className="mb-16 animate-fade-up">
+          {/* Meta row */}
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-amber-600">{postMetadata.catalog}</span>
+            <span className="w-1 h-1 rounded-full bg-[#e7e5e4]" />
+            <time className="text-[11px] font-mono text-[#a8a29e]">{formattedDate}</time>
+            <span className="w-1 h-1 rounded-full bg-[#e7e5e4]" />
+            <span className="flex items-center gap-1 text-[11px] font-mono text-[#a8a29e]">
+              <Clock size={10} />
+              {readingTime} min read
+            </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 mb-10 leading-[1.1] tracking-tight" style={{ fontWeight: 600, color: '#1c1917' }}>
+          {/* Title — editorial serif, dramatic size */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1c1917] mb-8 leading-[1.08] tracking-tight animate-fade-up stagger-1">
             {postMetadata.title}
           </h1>
 
-          <div className="flex items-center justify-between py-4 border-y border-zinc-100">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-3 mb-10 animate-fade-up stagger-2">
+            {postMetadata.tags.map(tag => (
+              <Link
+                key={tag}
+                href={`/tag/${tag}`}
+                className={`text-[11px] font-mono hover:opacity-70 transition-opacity ${getTagColor(tag)}`}
+              >
+                #{tag.toLowerCase().replace(/\s+/g, '-')}
+              </Link>
+            ))}
+          </div>
+
+          {/* Author bar */}
+          <div className="flex items-center justify-between py-5 border-y border-[#e7e5e4] animate-fade-up stagger-3">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-center font-bold text-zinc-400 overflow-hidden">
+              <div className="w-10 h-10 rounded-full overflow-hidden ring-1 ring-[#e7e5e4]">
                 <Image
                   src={siteConfig.avatarUrl}
                   alt={`${siteConfig.author} avatar`}
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 rounded-2xl object-cover"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-cover"
                   priority
                 />
               </div>
               <div>
-                <p className="text-sm font-extrabold text-zinc-900">{siteConfig.author}</p>
-                <p className="text-xs text-zinc-400">{siteConfig.role}</p>
+                <p className="text-sm font-medium text-[#1c1917]">{siteConfig.author}</p>
+                <p className="text-[11px] font-mono text-[#a8a29e]">{siteConfig.role}</p>
               </div>
             </div>
-            <button className="p-3 rounded-2xl bg-zinc-50 border border-zinc-100 text-zinc-400 hover:text-zinc-900 hover:border-zinc-200 transition-all" aria-label="Share this post">
-              <Share2 size={18} />
+            <button className="p-2.5 rounded-lg bg-[#f5f5f4] border border-[#e7e5e4] text-[#a8a29e] hover:text-amber-600 hover:border-amber-600/30 transition-all duration-300" aria-label="Share this post">
+              <Share2 size={14} />
             </button>
           </div>
         </header>
 
-        <div className="markdown"
+        {/* ── Article Body ─────────────────────── */}
+        <div className="markdown animate-fade-up stagger-4"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
 
-        <footer className="mt-20 pt-16 border-t border-zinc-100">
-          <h3 className="text-sm font-black text-zinc-900 uppercase tracking-[0.2em] mb-8 text-center">Related Articles</h3>
+        {/* ── Related Articles ─────────────────── */}
+        <footer className="mt-24 pt-16 border-t border-[#e7e5e4]">
+          <div className="flex items-center gap-3 mb-10">
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#a8a29e]">Related</span>
+            <div className="flex-1 h-px bg-[#e7e5e4]" />
+          </div>
           {relatedPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {relatedPosts.map(p => (
                 <BlogCard key={p.id} metadata={p} />
               ))}
             </div>
           ) : (
-            <p className="text-center text-zinc-400 italic">More coming soon...</p>
+            <p className="text-[#a8a29e] font-mono text-sm italic">More articles coming soon...</p>
           )}
         </footer>
       </article>

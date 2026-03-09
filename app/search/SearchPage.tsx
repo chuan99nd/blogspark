@@ -4,6 +4,7 @@ import { PostMetadata } from '@/types/types';
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Search, ArrowUpRight } from 'lucide-react';
 
 export default function SearchPage() {
     const searchParams = useSearchParams();
@@ -43,62 +44,67 @@ export default function SearchPage() {
     }, [query, allPosts]);
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-300">
-            {/* Input Box */}
-            <div className="relative mb-12">
-                <div className="relative flex items-center bg-white border-2 border-zinc-900 rounded-lg overflow-hidden h-14">
+        <div className="max-w-3xl mx-auto px-6 pt-16 pb-20">
+            {/* Search Header */}
+            <div className="mb-16">
+                <h1 className="text-3xl font-bold text-[#1c1917] mb-6">
+                    Search<span className="text-amber-600 italic"> articles</span>
+                </h1>
+                <div className="relative group">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#a8a29e] group-focus-within:text-amber-600 transition-colors" size={18} />
                     <input
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="w-full h-full px-6 py-2 text-lg font-medium text-zinc-900 focus:outline-none"
-                        placeholder="Type to search..."
+                        className="w-full bg-[#f5f5f4] border border-[#e7e5e4] rounded-lg py-4 pl-12 pr-6 text-lg text-[#1c1917] placeholder:text-[#a8a29e] font-mono focus:outline-none focus:border-amber-600/50 focus:ring-1 focus:ring-amber-600/20 transition-all"
+                        placeholder="grep -i ..."
                         aria-label="Search blog posts"
+                        autoFocus
                     />
+                    {query && (
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-mono text-[#a8a29e]">
+                            {searchResults.posts.length} match{searchResults.posts.length !== 1 ? 'es' : ''}
+                        </span>
+                    )}
                 </div>
             </div>
 
-            {/* Results Section */}
+            {/* Results */}
             <div>
-                <h2 className="text-xl font-bold text-zinc-900 mb-8">Results</h2>
-
                 {searchResults.posts.length > 0 ? (
-                    <div className="space-y-16">
-                        {searchResults.posts.map(post => (
-                            <div key={post.id} className="group">
-                                <Link href={`/post/${post.id}`}>
-                                    <h3 className="text-3xl font-bold text-zinc-900 mb-4 group-hover:text-zinc-700 transition-colors">
-                                        {post.title}
-                                    </h3>
-                                </Link>
-
-                                <p className="text-zinc-600 italic mb-2 text-[15px]">
-                                    {new Date(post.createdAt).toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: 'numeric',
-                                    })}
-                                </p>
-
-                                <p className="text-zinc-700 text-lg leading-relaxed mb-6">
-                                    {post.summary}
-                                </p>
-
-                                {/* {post.image && (
-                                    <div className="w-full overflow-hidden rounded-lg mb-4 bg-zinc-50 border border-zinc-100 flex justify-center">
-                                        <img
-                                            src={post.image}
-                                            alt={post.title}
-                                            className="max-w-full h-auto object-contain max-h-[500px]"
-                                        />
+                    <div className="space-y-0">
+                        {searchResults.posts.map((post, i) => (
+                            <Link
+                                key={post.id}
+                                href={`/post/${post.id}`}
+                                className="group block py-6 border-b border-[#e7e5e4] first:border-t hover:bg-[#f5f5f4] -mx-4 px-4 rounded-sm transition-colors duration-200"
+                                style={{ animationDelay: `${i * 50}ms` }}
+                            >
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex-1 min-w-0">
+                                        <h3 className="text-lg font-bold text-[#1c1917] mb-2 group-hover:text-amber-500 transition-colors truncate">
+                                            {post.title}
+                                        </h3>
+                                        <p className="text-sm text-[#78716c] line-clamp-2 leading-relaxed mb-2">
+                                            {post.summary}
+                                        </p>
+                                        <time className="text-[11px] font-mono text-[#a8a29e]">
+                                            {new Date(post.createdAt).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            })}
+                                        </time>
                                     </div>
-                                )} */}
-                            </div>
+                                    <ArrowUpRight size={16} className="text-[#a8a29e] group-hover:text-amber-600 mt-1 flex-shrink-0 transition-colors" />
+                                </div>
+                            </Link>
                         ))}
                     </div>
                 ) : query.trim() ? (
-                    <div className="py-20 text-center text-zinc-400">
-                        No results found.
+                    <div className="py-24 text-center">
+                        <p className="text-[#a8a29e] font-mono text-sm mb-2">No results for &quot;{query}&quot;</p>
+                        <p className="text-[#d6d3d1] font-mono text-xs">Try a different search term</p>
                     </div>
                 ) : null}
             </div>
