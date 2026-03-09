@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import BlogCard from '@/components/BlogCard';
 import Sidebar from '@/components/Sidebar';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components_client/Navbar';
 import { Github, Linkedin, Globe } from 'lucide-react';
 import { getAllPosts, getSiteConfig } from '@/libs/cache';
 
@@ -30,13 +30,13 @@ const Home: React.FC<{ tagName?: string }> = async ({ tagName }) => {
         <div className="flex flex-col items-center gap-4">
           <span className="text-[13px] font-bold text-zinc-900 tracking-wide">Connect with me:</span>
           <div className="flex gap-4">
-            <a href={siteConfig?.github} className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all">
+            <a href={siteConfig?.github} className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all" aria-label="GitHub profile">
               <Github size={20} />
             </a>
-            <a href={siteConfig?.socials.linkedin} className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all">
+            <a href={siteConfig?.socials.linkedin} className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all" aria-label="LinkedIn profile">
               <Linkedin size={20} />
             </a>
-            <a href="#" className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all">
+            <a href="#" className="p-3 rounded-2xl bg-white border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:shadow-md transition-all" aria-label="Personal website">
               <Globe size={20} />
             </a>
           </div>

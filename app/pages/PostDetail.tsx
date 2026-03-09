@@ -1,9 +1,10 @@
 import React from 'react';
 
 import Link from 'next/link'
+import Image from 'next/image';
 import { ArrowLeft, Share2 } from 'lucide-react';
 import BlogCard from '@/components/BlogCard';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components_client/Navbar';
 import BlogScrollEffect from '@/components_client/BlogScrollEffect';
 import { remark } from 'remark';
 import remarkGfm from "remark-gfm";
@@ -79,15 +80,22 @@ const PostDetail: React.FC<{ params: { id: string } }> = async ({ params }) => {
 
           <div className="flex items-center justify-between py-4 border-y border-zinc-100">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-center font-bold text-zinc-400">
-                <img src={siteConfig.avatarUrl} alt="Avatar" className="w-12 h-12 rounded-2xl" />
+              <div className="w-12 h-12 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-center font-bold text-zinc-400 overflow-hidden">
+                <Image
+                  src={siteConfig.avatarUrl}
+                  alt={`${siteConfig.author} avatar`}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-2xl object-cover"
+                  priority
+                />
               </div>
               <div>
                 <p className="text-sm font-extrabold text-zinc-900">{siteConfig.author}</p>
                 <p className="text-xs text-zinc-400">{siteConfig.role}</p>
               </div>
             </div>
-            <button className="p-3 rounded-2xl bg-zinc-50 border border-zinc-100 text-zinc-400 hover:text-zinc-900 hover:border-zinc-200 transition-all">
+            <button className="p-3 rounded-2xl bg-zinc-50 border border-zinc-100 text-zinc-400 hover:text-zinc-900 hover:border-zinc-200 transition-all" aria-label="Share this post">
               <Share2 size={18} />
             </button>
           </div>

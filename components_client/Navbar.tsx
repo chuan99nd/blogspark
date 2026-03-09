@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 const Navbar: React.FC = () => {
   const router = useRouter();
 
-  const handleSearchChange = (e: any) => {
+  const handleSearchChange = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget)
     const query = formData.get("query")
@@ -39,13 +39,14 @@ const Navbar: React.FC = () => {
               placeholder="Search concepts or tags..."
               className="w-full bg-zinc-50 border border-zinc-200 rounded-xl py-1.5 pl-9 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition-all text-sm placeholder:text-zinc-400"
               name='query'
+              aria-label="Search blog posts"
             />
           </div>
         </form>
 
 
         <div className="flex items-center gap-4 ml-4">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-zinc-900 transition-colors">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-zinc-900 transition-colors" aria-label="GitHub profile">
             <Github size={20} />
           </a>
         </div>

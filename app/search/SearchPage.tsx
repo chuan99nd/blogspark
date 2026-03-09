@@ -53,6 +53,7 @@ export default function SearchPage() {
                         onChange={(e) => setQuery(e.target.value)}
                         className="w-full h-full px-6 py-2 text-lg font-medium text-zinc-900 focus:outline-none"
                         placeholder="Type to search..."
+                        aria-label="Search blog posts"
                     />
                 </div>
             </div>
