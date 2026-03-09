@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import { Github, Linkedin, Globe } from 'lucide-react';
 import { getAllPosts, getSiteConfig } from '@/libs/cache';
 
-
 const Home: React.FC<{ tagName?: string }> = async ({ tagName }) => {
 
   const siteConfig = await getSiteConfig();
