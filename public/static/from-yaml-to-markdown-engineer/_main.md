@@ -7,11 +7,11 @@ Rồi thực tế dạy tôi rằng: phần lớn thời gian tôi không viết
 
 Mối quan hệ của tôi với YAML bắt đầu như mọi mối tình đầu: đầy hy vọng, không hiểu gì, và rất nhiều đau thương.
 
-\`\`\`yaml
+```yaml
 steps:
-  - name: Deploy to production
+  - name: Deploy to production aaabb
     run: echo "What could go wrong?"
-\`\`\`
+```
 
 YAML trông vô hại. Không ngoặc nhọn, không chấm phẩy. Tối giản và thanh lịch.
 
