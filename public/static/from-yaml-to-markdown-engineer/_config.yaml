@@ -1,0 +1,10 @@
+title: "Từ YAML Engineer đến Markdown Engineer"
+createdAt: "2026-03-10T00:00:00Z"
+modifiedAt: "2026-03-10T00:00:00Z"
+summary: |
+  Có một thời, tôi sống giữa những dòng YAML – indent 2 spaces, một tab thừa là cả pipeline sụp đổ. Rồi một ngày, tôi nhận ra mình đang viết Markdown nhiều hơn viết code. Từ engineer deploy production đến engineer deploy cảm xúc. Đây là câu chuyện của một kỹ sư phần mềm, viết bằng giọng của người đã từng debug YAML lúc 3 giờ sáng, và bây giờ đang debug chính mình.
+tags:
+  - "Life style"
+  - "Career"
+  - "Ridiculous"
+catalog: "blog"
